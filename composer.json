@@ -1,5 +1,5 @@
 {
-    "name": "phpMultiLog",
+    "name": "ckir/phpMultiLog",
     "type": "library",
     "description": "A not PSR compatible multi-transport logging and error/exception handling library for php.",
     "keywords": ["phpMultiLog"],
