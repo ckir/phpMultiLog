@@ -111,14 +111,14 @@ class phpMultiLog {
 	 */
 	static $shutdownHandler = null;
 	
+
 	/**
-	 *
-	 * @param string $file        	
-	 * @param array $streams        	
-	 * @param string $id        	
-	 * @param string $logapp        	
+	 * @param string $appID A unique id for the application
+	 * @param string $handleErrors Set to false to disable error and unhandled exceptions logging
+	 * @param string $customTransportsDir Folder location for custom transports
+	 * @throws phpMultiLogException
 	 */
-	public function __construct($appID = null, $customTransportsDir = null, $handleErrors = true) {
+	public function __construct($appID = null, $handleErrors = true, $customTransportsDir = null) {
 		self::$appID = $appID;
 		
 		// Get all available transports
@@ -447,4 +447,5 @@ class phpMultiLog {
 		return date ( preg_replace ( '`(?<!\\\\)u`', $milliseconds, $format ), $timestamp );
 	} // function udate
 } // class phpMultiLog
+
 
