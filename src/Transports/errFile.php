@@ -12,7 +12,9 @@ class errFile {
 	protected $logfile;
 	
 	/**
-	 * @param array $transportParameters Transport initialization parameters
+	 *
+	 * @param array $transportParameters
+	 *        	Transport initialization parameters
 	 */
 	public function __construct($transportParameters = array()) {
 		$this->logfile = $transportParameters ["filename"];
