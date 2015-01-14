@@ -1,6 +1,6 @@
 <?php
 
-namespace Transports;
+namespace phpMultiLog\Transports;
 
 /**
  *
