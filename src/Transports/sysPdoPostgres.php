@@ -1,16 +1,16 @@
 <?php
 
-namespace phpMultiLog\Transports;
+namespace Transports;
 
 /**
  *
  * @author user
  *        
  */
-class errPdoPostgres {
+class sysPdoPostgres {
 	
 	protected $db;
-	protected $table = "phpmultilogerr";
+	protected $table = "phpmultilogsys";
 	protected $query = false;
 	
 	/**
@@ -19,17 +19,16 @@ class errPdoPostgres {
 	 *        	Transport initialization parameters
 	 */
 	public function __construct($transportParameters = array()) {
-		
 		if (isset ( $transportParameters ["table"] )) {
 			$this->table = $transportParameters ["table"];
 		} else {
-			$this->table = "phpmultilogerr";
+			$this->table = "phpmultilogsys";
 		}
 		
 		if (isset ( $transportParameters ["pdo"] ) && $transportParameters ["pdo"] instanceof \PDO) {
 			$this->db = $transportParameters ["pdo"];
 			try {
-				$this->query = $this->db->prepare ( "INSERT INTO $this->table (appID, date, errno, errstr, errfile, errline, errcontext) VALUES (?, ?, ?, ?, ?, ?, ?)" );
+				$this->query = $this->db->prepare ( "INSERT INTO $this->table (appid, date, logtype, loglevel, message, context) VALUES (?, ?, ?, ?, ?, ?)" );
 				if (! $this->query) {
 					syslog ( LOG_ERR, get_class () . " Cannot prepare statement because: " . json_encode ( $this->db->errorInfo () ) );
 				}
@@ -41,29 +40,28 @@ class errPdoPostgres {
 	} // function __construct
 	
 	/**
-	 * Writes a record to database
+	 * Writes a record to a file
 	 *
 	 * @param string $appID        	
 	 * @param string $date        	
-	 * @param integer $errno        	
-	 * @param string $errstr        	
-	 * @param string $errfile        	
-	 * @param string $errline        	
-	 * @param string $errcontext        	
+	 * @param string $logType        	
+	 * @param integer $logLevel        	
+	 * @param unknown $message        	
+	 * @param array $context        	
 	 */
-	public function log($appID, $date, $errno, $errstr, $errfile, $errline, $errcontext) {
+	public function log($appID, $date, $logType, $logLevel, $message, $context) {
 		if (! $this->query) {
 			return;
 		}
-		$logrecord = sprintf ( "App: %s - date: %s - errno: %s - errstr: %s - errfile: %s - errline: %s", $appID, $date, $errno, $errstr, $errfile, $errline );
+		$logrecord = sprintf ( "App: %s - date: %s - type: %s - level: %s - message: %s - context: %s", $appID, $date, $logType, $logLevel, $message, $context );
 		try {
 			$this->query->bindParam ( 1, $appID, \PDO::PARAM_STR );
 			$this->query->bindParam ( 2, $date, \PDO::PARAM_STR );
-			$this->query->bindParam ( 3, $errno, \PDO::PARAM_INT );
-			$this->query->bindParam ( 4, $errstr, \PDO::PARAM_STR );
-			$this->query->bindParam ( 5, $errfile, \PDO::PARAM_STR );
-			$this->query->bindParam ( 6, $errline, \PDO::PARAM_INT );
-			$this->query->bindParam ( 7, $errcontext, \PDO::PARAM_STR );
+			$this->query->bindParam ( 3, $logType, \PDO::PARAM_STR );
+			$this->query->bindParam ( 4, $logLevel, \PDO::PARAM_INT );
+			$this->query->bindParam ( 5, $message, \PDO::PARAM_STR );
+			$this->query->bindParam ( 6, $context, \PDO::PARAM_STR );
+			
 			if (! $this->query->execute ()) {
 				syslog ( LOG_ERR, get_class () . " Cannot write $logrecord to database because: " . json_encode ( $this->db->errorInfo () ) );
 			}
@@ -71,6 +69,7 @@ class errPdoPostgres {
 			syslog ( LOG_ERR, get_class () . " Cannot write $logrecord to database because: " . json_encode ( $this->db->errorInfo () ) );
 		}
 	} // function log
-} // class errPdoPostgres
+	
+} // class sysPdoPostgres
 
 ?>
