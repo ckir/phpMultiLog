@@ -395,6 +395,13 @@ class phpMultiLog {
 	} // function logDebug
 	
 	/**
+	 * @param \Exception $ex
+	 */
+	public function logException(\Exception $ex) {
+		$this->customExceptionHandler($ex);
+	} // function logException
+	
+	/**
 	 *
 	 * @param unknown $array        	
 	 * @param unknown $remove        	
