@@ -209,10 +209,11 @@ class phpMultiLog {
 		$errcontext = json_encode ( $errcontext );
 		
 		// Send it to transports
+		$ts = self::udate ( 'Y-m-d H:i:s.u' );
 		foreach ( self::$errTransports as $transport => $parameters ) {
 			$adapter = __NAMESPACE__ . '\\Transports\\' . $transport;
 			$adapter = new $adapter ( $parameters );
-			$adapter->log ( self::$appID, self::udate ( 'Y-m-d H:i:s.u' ), $errno, $errstr, $errfile, $errline, $errcontext );
+			$adapter->log ( self::$appID, $ts, $errno, $errstr, $errfile, $errline, $errcontext );
 		}
 		
 		// Don't execute PHP internal error handler
@@ -234,10 +235,11 @@ class phpMultiLog {
 		$errcontext = json_encode ( $errcontext );
 		
 		// Send it to transports
+		$ts = self::udate ( 'Y-m-d H:i:s.u' );
 		foreach ( self::$errTransports as $transport => $parameters ) {
 			$adapter = __NAMESPACE__ . '\\Transports\\' . $transport;
 			$adapter = new $adapter ( $parameters );
-			$adapter->log ( self::$appID, self::udate ( 'Y-m-d H:i:s.u' ), $errno, $errstr, $errfile, $errline, $errcontext );
+			$adapter->log ( self::$appID, $ts, $errno, $errstr, $errfile, $errline, $errcontext );
 		}
 	} // function ccustomExceptionHandler
 	
