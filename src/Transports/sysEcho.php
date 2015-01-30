@@ -39,7 +39,7 @@ class sysEcho {
 	 * @param array $context        	
 	 */
 	public function log($appID, $date, $logType, $logLevel, $message, $context) {
-		$logrecord = sprintf ( "date: %s - type: %s - message: %s", $date, $logType, $message ) . PHP_EOL;
+		$logrecord = sprintf ( "%s - type: %s - message: %s", $date, $logType, $message ) . PHP_EOL;
 		echo $logrecord;
 	} // function log
 } // class sysEcho
