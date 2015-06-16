@@ -7,7 +7,7 @@ namespace phpMultiLog\Transports;
  * @author user
  *        
  */
-class sysStderr {
+class sysStderrJson {
 	
 	protected $stderr;
 	
