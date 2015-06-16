@@ -234,9 +234,13 @@ class phpMultiLog {
 		$errstr = $ex->getMessage ();
 		$errfile = $ex->getFile ();
 		$errline = $ex->getLine ();
-		$errcontext = $ex->getTrace ();
 		
-		$errcontext = json_encode ( $errcontext );
+		$errcontext = get_defined_vars();
+		// Remove secret variables from content
+		foreach ( self::$errSecrets as $secret ) {
+			self::array_unset_recursive ( $errcontext, $secret );
+		}
+		$errcontext = json_encode ( $errcontext );		
 		
 		// Send it to transports
 		$ts = self::udate ( 'Y-m-d H:i:s.u' );
@@ -245,7 +249,7 @@ class phpMultiLog {
 			$adapter = new $adapter ( $parameters );
 			$adapter->log ( self::$appID, $ts, $errno, $errstr, $errfile, $errline, $errcontext );
 		}
-	} // function ccustomExceptionHandler
+	} // function customExceptionHandler
 	
 	/**
 	 * Add a transport for error/exception log
