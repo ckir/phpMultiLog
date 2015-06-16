@@ -229,7 +229,7 @@ class phpMultiLog {
 	 *
 	 * @param \Exception $ex        	
 	 */
-	static protected function customExceptionHandler(\Exception $ex) {
+	static function customExceptionHandler(\Exception $ex) {
 		$errno = $ex->getCode ();
 		$errstr = $ex->getMessage ();
 		$errfile = $ex->getFile ();
