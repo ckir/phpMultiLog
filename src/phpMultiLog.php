@@ -235,11 +235,7 @@ class phpMultiLog {
 		$errfile = $ex->getFile ();
 		$errline = $ex->getLine ();
 		
-		$errcontext = get_defined_vars();
-		// Remove secret variables from content
-		foreach ( self::$errSecrets as $secret ) {
-			self::array_unset_recursive ( $errcontext, $secret );
-		}
+		$errcontext = $ex->getTrace();
 		$errcontext = json_encode ( $errcontext );		
 		
 		// Send it to transports
