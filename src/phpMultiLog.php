@@ -216,8 +216,8 @@ class phpMultiLog {
 			$adapter->log ( self::$appID, $ts, $errno, $errstr, $errfile, $errline, $errcontext );
 		}
 		
-		// Execute PHP internal error handler
-		return false;
+		// Don't execute PHP internal error handler
+		return true;
 	} // function customErrorHandler
 	
 	/**
