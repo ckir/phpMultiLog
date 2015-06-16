@@ -215,7 +215,11 @@ class phpMultiLog {
 			$adapter = new $adapter ( $parameters );
 			$adapter->log ( self::$appID, $ts, $errno, $errstr, $errfile, $errline, $errcontext );
 		}
-		
+
+		if (($errno == E_ERROR) || ($errno == E_USER_ERROR)) {
+			exit ( 1 );
+		}
+				
 		// Don't execute PHP internal error handler
 		return true;
 	} // function customErrorHandler
