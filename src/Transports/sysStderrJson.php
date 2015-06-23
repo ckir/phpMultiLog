@@ -46,7 +46,7 @@ class sysStderrJson {
 		$logrecord['logLevel'] = $logLevel;
 		$logrecord['message'] = $message;
 		$logrecord['context'] = $context;
-		$logrecord = json_encode($logrecord) . PHP_EOL;
+		$logrecord = json_encode($logrecord, JSON_UNESCAPED_UNICODE) . PHP_EOL;
 		if ($this->stderr) {
 			if (! fwrite ( $this->stderr, $logrecord )) {
 				error_log ( "Cannot write [$logrecord] to stderr" );
