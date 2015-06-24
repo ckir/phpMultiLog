@@ -31,7 +31,7 @@ class errStderr {
 	 */
 	public function log($appID, $date, $errno, $errstr, $errfile, $errline, $errcontext) {
 		$logrecord = sprintf ( "App: %s - date: %s - errno: %s - errstr: %s - errfile: %s - errline: %s", $appID, $date, $errno, $errstr, $errfile, $errline ) . PHP_EOL;
-		if (! fwrite ( STDERR, $logrecord )) {
+		if (! @fwrite ( STDERR, $logrecord )) {
 			error_log ( "Cannot write $logrecord to stderr" );
 		}
 	} // function log

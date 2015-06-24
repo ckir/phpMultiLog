@@ -39,7 +39,7 @@ class errStderrJson {
 		$logrecord ['errcontext'] = $errcontext;
 		$logrecord = json_encode ( $logrecord, JSON_UNESCAPED_UNICODE ) . PHP_EOL;
 		
-		if (! fwrite ( STDERR, $logrecord )) {
+		if (! @fwrite ( STDERR, $logrecord )) {
 			error_log ( "Cannot write $logrecord to stderr" );
 		}
 	} // function log

@@ -34,7 +34,7 @@ class sysStderr {
 	public function log($appID, $date, $logType, $logLevel, $message, $context) {
 		$logrecord = sprintf ( "App: %s - date: %s - type: %s - level: %s - message: %s - context: %s", $appID, $date, $logType, $logLevel, $message, $context ) . PHP_EOL;
 		
-		if (! fwrite ( STDERR, $logrecord )) {
+		if (! @fwrite ( STDERR, $logrecord )) {
 			error_log ( "Cannot write [$logrecord] to stderr" );
 		}
 	} // function log()
