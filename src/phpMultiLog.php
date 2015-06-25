@@ -63,6 +63,11 @@ class phpMultiLog {
 	const DEBUG = 7; // Debug: debug messages
 	
 	/**
+	 * Detailed debug information.
+	 */
+	const TRACE = 8; // Detailed debug information
+		
+	/**
 	 * Application identifier
 	 *
 	 * @var string $appID
@@ -397,6 +402,14 @@ class phpMultiLog {
 	public function logDebug($message, array $context = array()) {
 		$this->log ( self::DEBUG, $message, $context );
 	} // function logDebug
+	
+	/**
+	 * @param unknown $message
+	 * @param array $context
+	 */
+	public function logTrace($message, array $context = array()) {
+		$this->log ( self::TRACE, $message, $context );
+	} // function logTrace	
 	
 	/**
 	 * @param \Exception $ex
