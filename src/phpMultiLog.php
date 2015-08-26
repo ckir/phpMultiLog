@@ -439,14 +439,14 @@ class phpMultiLog {
 	 */
 	private function logtype($loglevel) {
 		$types = array (
-				self::EMERG => 'Emergency',
-				self::ALERT => 'Alert',
-				self::CRIT => 'Critical',
-				self::ERR => 'Error',
-				self::WARN => 'Warning',
-				self::NOTICE => 'Notice',
-				self::INFO => 'Informational',
-				self::DEBUG => 'Debug' 
+				self::EMERG =>  'Emergency',
+				self::ALERT =>  'Alert    ',
+				self::CRIT =>   'Critical ',
+				self::ERR =>    'Error    ',
+				self::WARN =>   'Warning  ',
+				self::NOTICE => 'Notice   ',
+				self::INFO =>   'Info     ',
+				self::DEBUG =>  'Debug    ' 
 		);
 		
 		if (isset ( $types [$loglevel] )) {
@@ -467,10 +467,10 @@ class phpMultiLog {
 		if (is_null ( $utimestamp ))
 			$utimestamp = microtime ( true );
 		
-		$timestamp = floor ( $utimestamp );
-		$milliseconds = round ( ($utimestamp - $timestamp) * 1000000 );
+		$micro = sprintf("%06d",($utimestamp - floor($utimestamp)) * 1000000);
+		$d = new \DateTime( date('Y-m-d H:i:s.'.$micro, $utimestamp) );
 		
-		return date ( preg_replace ( '`(?<!\\\\)u`', $milliseconds, $format ), $timestamp );
+		return $d->format('Y-m-d H:i:s.u');
 	} // function udate
 } // class phpMultiLog
 

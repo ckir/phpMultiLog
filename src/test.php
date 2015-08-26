@@ -1,5 +1,6 @@
 <?php
-$logger = new phpMultiLog ( "TestsphpMultiLog", null, false );
+require_once("phpMultiLog.php");
+$logger = new phpMultiLog\phpMultiLog ( "TestsphpMultiLog", null, false );
 $logger->errTransportAdd ( "errStderr" );
 $logger->errTransportAdd ( "errFile", array (
 		"filename" => "/tmp/phpMultiLogErr.log"
